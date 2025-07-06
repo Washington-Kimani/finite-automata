@@ -1,6 +1,6 @@
+const path = require('path');
 const express = require("express");
 const cors = require("cors");
-const app = express();
 const register = require("./routes/register");
 const login = require("./routes/login");
 const users = require("./routes/users");
@@ -21,7 +21,10 @@ const generatedWords = require("./routes/generateWordsFromGrammar.route");
 const { connectDb } = require("./configs/db");
 const dotenv = require("dotenv");
 
+const app = express();
 dotenv.config();
+
+// const __dirname = path.resolve();
 
 /*MIDDLEWARES*/
 app.use(cors());
@@ -45,8 +48,10 @@ app.use("/generate", generateGrammar);
 app.use("/check", checkGrammar);
 app.use("/generateWords", generatedWords);
 app.use("/playground", playGround);
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+
+// main route
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
 });
 
 // connect to database
