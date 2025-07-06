@@ -24,7 +24,6 @@ const dotenv = require("dotenv");
 const app = express();
 dotenv.config();
 
-const __dirname = path.resolve();
 
 /*MIDDLEWARES*/
 app.use(cors());
