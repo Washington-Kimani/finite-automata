@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: finite-backend
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+    gitSync:
+      branch: main
+
+  - type: static_site
+    name: finite-frontend
+    env: node
+    buildCommand: npm install --prefix frontend && npm run build --prefix frontend
+    startCommand: npm run start --prefix frontend
+    envVars:
+      - key: NODE_ENV
+        value: production
+    gitSync:
+      branch: main
