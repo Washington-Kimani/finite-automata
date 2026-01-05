@@ -1,6 +1,10 @@
-const path = require('path');
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
+const dotenv = require("dotenv");
+const { connectDb } = require("./configs/db");
+
+/* ROUTES */
 const register = require("./routes/register");
 const login = require("./routes/login");
 const users = require("./routes/users");
@@ -16,26 +20,22 @@ const markComplete = require("./routes/markModuleComplete.route");
 const postResults = require("./routes/postResults.route");
 const getResults = require("./routes/results.route");
 const generateGrammar = require("./routes/generateGrammar.route");
-const playGround =require('./routes/playground.route')
+const playGround = require("./routes/playground.route");
 const generatedWords = require("./routes/generateWordsFromGrammar.route");
-const { connectDb } = require("./configs/db");
-const dotenv = require("dotenv");
 
-const app = express();
 dotenv.config();
 
+const app = express();
 
-/*MIDDLEWARES*/
 app.use(cors());
 app.use(express.json());
-app.get("*", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "..", "frontend", "dist", "index.html")
-  );
-});
+
+const distPath = path.join(__dirname, "..", "frontend", "dist");
+
+// Serve static assets (JS, CSS, images)
+app.use(express.static(distPath));
 
 
-/*ALL ROUTES*/
 app.use("/register", register);
 app.use("/login", login);
 app.use("/users", users);
@@ -54,15 +54,13 @@ app.use("/check", checkGrammar);
 app.use("/generateWords", generatedWords);
 app.use("/playground", playGround);
 
-// main route
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+  res.sendFile(path.join(distPath, "index.html"));
 });
 
-// connect to database
 connectDb();
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Server is running at port ${port}`);
+  console.log(`🚀 Server running on port ${port}`);
 });
