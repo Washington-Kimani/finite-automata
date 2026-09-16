@@ -15,6 +15,7 @@ export const Signup = () => {
     });
 
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState('');
 
     const handleChange = (e) => {
@@ -27,6 +28,7 @@ export const Signup = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         try {
             const response = await axios.post('/register', formData);
@@ -167,9 +169,9 @@ export const Signup = () => {
 
             <button
               type="submit"
-              className="col-span-2 px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-md hover:bg-blue-400"
+              className={`${loading ? "disabled bg-blue-300 pointer-events-none cursor-progress" : ""} col-span-2 px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-md hover:bg-blue-400`}
             >
-              <span>Sign Up</span>
+              <span>{loading ? "Signing Up..." : "Sign Up"}</span>
             </button>
           </form>
         </div>
