@@ -107,7 +107,7 @@ const ModuleContent = () => {
 
     return (
       <div className="text-content">
-        {sections.map((section, index) => {
+        {sections && sections.map((section, index) => {
           // Check if the section starts with a number and period
           const isNumberedHeading = /^\d+\.\s/.test(section);
 
@@ -193,7 +193,7 @@ const ModuleContent = () => {
               <div key={index} className="quiz-question mb-4">
                 <p className="font-semibold">{question.question}</p>
                 <ul>
-                  {question.options.map((option, i) => (
+                  {question?.options.map((option, i) => (
                     <li key={i} className="mb-2">
                       {option}
                     </li>

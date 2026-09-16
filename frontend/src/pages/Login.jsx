@@ -10,6 +10,7 @@ export const Login = () => {
     });
 
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState('');
 
     const handleChange = (e) => {
@@ -23,12 +24,14 @@ export const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const { email, password } = formData;
+        const { email, password } = formData
+        setLoading(true);
         const response = await login(email, password);
 
         if (response.success) {
             setSuccess(response.message);
             setError('');
+            setLoading(false);
         } else {
             setError(response.message);
             setSuccess('');
@@ -86,9 +89,9 @@ export const Login = () => {
 
                     <button
                         type="submit"
-                        className="flex items-center justify-center w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-md hover:bg-blue-400"
+                        className={`${loading ? "disabled bg-blue-300 pointer-events-none cursor-progress" : ""} flex items-center justify-center w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-md hover:bg-blue-400`}
                     >
-                        <span>Log In</span>
+                        <span>{loading ? "Logging in..." : "Login"}</span>
                     </button>
                 </form>
             </div>

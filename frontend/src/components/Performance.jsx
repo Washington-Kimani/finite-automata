@@ -19,7 +19,7 @@ export default function Performance({progressData, performanceData, instructors,
           Instructors
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {instructors.map((instructor, index) => (
+          {instructors && instructors?.map((instructor, index) => (
             <div className="bg-white p-6 shadow-md rounded-lg" key={index}>
               <h3 className="text-lg font-medium text-gray-600">
                 Dr. {instructor.firstName}&nbsp;{instructor.lastName}
